@@ -21,13 +21,8 @@ function moveFileToFolder(fileName, folderName) {
   const originFilePath = path.join(targetDirPath, fileName);
   const targetPath = path.join(targetDirPath, folderName, fileName);
 
-  const readStream = fs.createReadStream(originFilePath);
-  const writeStream = fs.createWriteStream(targetPath);
-
-  const piping = readStream.pipe(writeStream);
-
-  piping.on('finish', () => {
-    fs.unlink(originFilePath, () => console.log(`${fileName} moved to ${folderName}`));
+  fs.rename(originFilePath, targetPath, (err) => console.log(err)).then(() => {
+    console.log(`${fileName} moved to ${folderName}`);
   });
 }
 
