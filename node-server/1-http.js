@@ -1,5 +1,6 @@
 const http = require('http');
-const http2 = require('http2');
+// const http2 = require('http2');
+const fs = require('fs');
 
 // console.log(http.STATUS_CODES);
 // console.log(http.METHODS);
@@ -11,13 +12,12 @@ const server = http.createServer((req, res) => {
   console.log(req.method);
   const url = req.url;
   if (url === '/') {
-    res.write('Welcome!');
+    fs.createReadStream('./index.html').pipe(res);
   } else if (url === '/courses') {
-    res.write('Courses');
+    fs.createReadStream('./courses.html').pipe(res);
   } else {
-    res.write('Not found');
+    fs.createReadStream('./not-found.html').pipe(res);
   }
-  res.end();
 });
 
 server.listen(8080);
