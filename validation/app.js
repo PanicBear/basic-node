@@ -16,9 +16,9 @@ const validate = (req, res, next) => {
 app.post(
   '/users',
   [
-    body('name').isLength({ min: 2 }).withMessage('fill name longer than 2 char'),
+    body('name').trim().isLength({ min: 2 }).withMessage('fill name longer than 2 char'),
     body('age').isInt().withMessage('숫자를 입력해주세요'),
-    body('email').isEmail().withMessage('이메일 형식으로 입력해주세요'),
+    body('email').isEmail().withMessage('이메일 형식으로 입력해주세요').normalizeEmail(),
     body('jobname').notEmpty(),
     validate,
   ],
